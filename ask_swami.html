@@ -2,100 +2,86 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accordion with Hyperlinked Text</title>
-    <!-- Link to Squarespace Stylesheet -->
-    <link rel="stylesheet" href="//assets.squarespace.com/universal/fonts/squarespace-clarkson-v2.css">
     <style>
         .accordion {
-            background-color: #eee;
-            color: #444;
+            background-color: #EDF1F2;
+            color: #071330;
             cursor: pointer;
-            padding: 18px;
             width: 100%;
             border: none;
             text-align: left;
             outline: none;
-            font-size: 15px;
             transition: 0.4s;
+            /* height: 14px; */
+            padding-top: 30px;
+            padding-bottom: 30px;
+            padding-left: 0px;
+            padding-right: 0px;
+            min-width: 70%;
+            font-family: 'Adobe Garamond Pro', serif;
+            font-size: 24px;
+            vertical-align: middle;
         }
 
         .active, .accordion:hover {
-            background-color: #ccc;
+            background-color: #C3CEDA;
         }
 
-        .accordion:after {
-            content: '\002B';
-            color: #777;
-            font-weight: bold;
-            float: right;
-            margin-left: 5px;
-        }
-
-        .active:after {
-            content: "\2212";
-        }
+        a:link { text-decoration: none; color: #071330; }
+        a:visited { text-decoration: none; }
+        a:hover { text-decoration: none; }
+        a:active { text-decoration: none; }
 
         .panel {
             padding: 0 18px;
-            background-color: white;
-            max-height: 0;
+            display: none;
+            background-color: #EDF1F2;
             overflow: hidden;
-            transition: max-height 0.2s ease-out;
-            border: 1px solid #ccc;
-        }
-
-        .panel a {
-            color: #0066cc;
-            text-decoration: none;
-        }
-
-        .panel a:hover {
-            text-decoration: underline;
+            white-space: pre-wrap;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #071330;
+            font-size: 17.6px;
+            line-height: 1.8em;
         }
     </style>
 </head>
 <body>
+    <div id="accordion-container"></div>
 
-<h2>Accordion with Hyperlinked Text</h2>
+    <script>
+        const url = 'https://svempaty.github.io/vsny-website/ask_swami_data.json';
 
-<button class="accordion">Section 1</button>
-<div class="panel">
-  <p><a href="https://example.com/link1">Link 1</a></p>
-  <p><a href="https://example.com/link2">Link 2</a></p>
-  <p><a href="https://example.com/link3">Link 3</a></p>
-</div>
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('accordion-container');
+                data.forEach((item, index) => {
+                    const accordion = document.createElement('button');
+                    accordion.classList.add('accordion');
+                    accordion.innerText = item.category;
 
-<button class="accordion">Section 2</button>
-<div class="panel">
-  <p><a href="https://example.com/link4">Link 4</a></p>
-  <p><a href="https://example.com/link5">Link 5</a></p>
-  <p><a href="https://example.com/link6">Link 6</a></p>
-</div>
+                    const panel = document.createElement('div');
+                    panel.classList.add('panel');
+                    
+                    item.links.forEach(link => {
+                        const a = document.createElement('a');
+                        a.href = link.url;
+                        a.innerText = link.text;
+                        a.target = '_blank';
+                        panel.appendChild(a);
+                        panel.appendChild(document.createElement('br'));
+                    });
 
-<button class="accordion">Section 3</button>
-<div class="panel">
-  <p><a href="https://example.com/link7">Link 7</a></p>
-  <p><a href="https://example.com/link8">Link 8</a></p>
-  <p><a href="https://example.com/link9">Link 9</a></p>
-</div>
+                    container.appendChild(accordion);
+                    container.appendChild(panel);
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var acc = document.getElementsByClassName("accordion");
-        for (var i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                }
-            });
-        }
-    });
-</script>
-
+                    accordion.addEventListener('click', () => {
+                        accordion.classList.toggle('active');
+                        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+                    });
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
 </body>
 </html>
