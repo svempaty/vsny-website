@@ -1,0 +1,26 @@
+[
+    {
+        "title": "Section 1",
+        "links": [
+            {"text": "Link 1", "url": "https://example.com/link1"},
+            {"text": "Link 2", "url": "https://example.com/link2"},
+            {"text": "Link 3", "url": "https://example.com/link3"}
+        ]
+    },
+    {
+        "title": "Section 2",
+        "links": [
+            {"text": "Link 4", "url": "https://example.com/link4"},
+            {"text": "Link 5", "url": "https://example.com/link5"},
+            {"text": "Link 6", "url": "https://example.com/link6"}
+        ]
+    },
+    {
+        "title": "Section 3",
+        "links": [
+            {"text": "Link 7", "url": "https://example.com/link7"},
+            {"text": "Link 8", "url": "https://example.com/link8"},
+            {"text": "Link 9", "url": "https://example.com/link9"}
+        ]
+    }
+]
