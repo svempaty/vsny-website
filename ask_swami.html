@@ -3,43 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <style>
+        /* Button element used as accordion */
         .accordion {
-            background-color: #EDF1F2;
-            color: #071330;
+            background-color: #EDF1F2; /* Lightest from palette */
+            color: #071330; /* Darkest from palette */
             cursor: pointer;
             width: 100%;
+            min-width: 70%;
             border: none;
+            border-top: 1px solid #071330; /* Add border between accordions */
             text-align: left;
             outline: none;
             transition: 0.4s;
-            /* height: 14px; */
-            padding-top: 30px;
-            padding-bottom: 30px;
+            /* Padding around text */
+            padding-top: 1em;
+            padding-bottom: 1em;
             padding-left: 0px;
             padding-right: 0px;
-            min-width: 70%;
+            /* Font family and size must match settings on website - Heading 4 */
             font-family: 'Adobe Garamond Pro', serif;
-            font-size: 24px;
+            font-weight: 400;
+            font-size: 22px;
             vertical-align: middle;
+            /* For the '+' sign, which is a pseudo element, to show up centered */
+            display: flex;
+            align-items: center;
         }
 
-        .active, .accordion:hover {
+        /* Expander '+' sign */
+        .accordion::after {
+            content: '+';
+            font-size: 24px;
+            color: #071330;
+            position: absolute;
+            right: 22px;
+        }
+
+        .accordion:last-child {
+            border-bottom: 1px solid #071330; /* Add top border for the first accordion */
+        }
+
+        /* When accordion is clicked, it's class is toggled to 'active'
+           and on mouse hover */
+        /* .active, .accordion:hover {
             background-color: #C3CEDA;
+        } */
+        
+        /* Expander '+' sign toggled when active */
+        .active::after {
+            content: '-';
         }
 
+        /* Don't use the hyperlink default of blue underline */
         a:link { text-decoration: none; color: #071330; }
         a:visited { text-decoration: none; }
         a:hover { text-decoration: none; }
         a:active { text-decoration: none; }
 
         .panel {
-            padding: 0 18px;
+            /* Padding around text */
+            padding-top: 0;
+            padding-bottom: 1em;
+            padding-left: 1em;
+            padding-right: 1em;
             display: none;
             background-color: #EDF1F2;
             overflow: hidden;
             white-space: pre-wrap;
+            color: #071330; /* Darkest from palette */
+            /* Font and line heights must match settings on website - Paragraph 2 */
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            color: #071330;
             font-size: 17.6px;
             line-height: 1.8em;
         }
@@ -75,9 +108,10 @@
                     container.appendChild(accordion);
                     container.appendChild(panel);
 
-                    accordion.addEventListener('click', () => {
-                        accordion.classList.toggle('active');
-                        panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+                    accordion.addEventListener('click', function () {
+                        this.classList.toggle('active');
+                        const nextPanel = this.nextElementSibling;
+                        nextPanel.style.display = nextPanel.style.display === 'block' ? 'none' : 'block';
                     });
                 });
             })
