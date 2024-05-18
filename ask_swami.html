@@ -116,6 +116,16 @@
                 });
             })
             .catch(error => console.error('Error fetching data:', error));
+
+        /* Test sizing of iframe in squarespace */
+        function sendHeight() {
+            var height = document.body.scrollHeight;
+            // Send the height to the parent window
+            parent.postMessage({ height: height }, 'https://vedantany.org');
+        }
+
+        window.addEventListener('load', sendHeight);
+        window.addEventListener('resize', sendHeight);
     </script>
 </body>
 </html>
